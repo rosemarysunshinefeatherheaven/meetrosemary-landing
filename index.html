@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Meet Rosemary — Your AI Chief of Staff</title>
-  <meta name="description" content="Rosemary is your AI Chief of Staff. She remembers everything, handles the details, and shows up every single day. Starting at $47/mo.">
+  <meta name="description" content="Rosemary is your AI Chief of Staff. She runs your backend — emails, content, research, ops — so you can stay in your zone of genius. Starting at $47/mo.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -18,10 +18,14 @@
     :root {
       --bg: #FAFAF8;
       --text: #1A1A1A;
-      --sage: #7A9E7E;
-      --sage-light: #EFF4F0;
-      --brass: #C9A96E;
-      --border: #E8E8E4;
+      --sage: #7C9A7E;
+      --sage-dark: #6A8A6C;
+      --sage-light: #EDF2ED;
+      --brass: #B8977A;
+      --brass-light: #F0E8DF;
+      --muted: #6B7280;
+      --card: #F5F3EF;
+      --border: #E8E5DF;
       --white: #FFFFFF;
     }
 
@@ -30,919 +34,1452 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.7;
       font-size: 16px;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     h1, h2, h3, h4 {
       font-family: 'Playfair Display', Georgia, serif;
+      font-weight: 600;
       line-height: 1.2;
-      letter-spacing: -0.01em;
     }
 
     .container {
-      max-width: 1120px;
+      max-width: 1140px;
       margin: 0 auto;
       padding: 0 24px;
     }
 
-    /* Fade-in animation */
+    .section {
+      padding: 100px 0;
+    }
+
+    .section-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 5vw, 48px);
+      margin-bottom: 20px;
+      max-width: 700px;
+    }
+
+    .section-subtitle {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
     .fade-in {
       opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
     }
+
     .fade-in.visible {
       opacity: 1;
       transform: translateY(0);
     }
 
     /* ─── NAV ─── */
-    nav {
-      padding: 28px 0;
-      border-bottom: 1px solid var(--border);
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(250, 250, 248, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
-    nav .container {
+
+    .nav.scrolled {
+      border-bottom-color: var(--border);
+      box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+    }
+
+    .nav-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 72px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
     }
+
     .nav-logo {
       font-family: 'Playfair Display', serif;
-      font-size: 1.25rem;
+      font-size: 22px;
       font-weight: 600;
       color: var(--text);
       text-decoration: none;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
-    .nav-logo .leaf {
-      color: var(--sage);
-      font-size: 1.1rem;
+
+    .nav-logo span {
+      font-size: 20px;
     }
-    .nav-cta {
-      background: var(--brass);
-      color: var(--white);
-      border: none;
-      padding: 10px 24px;
-      border-radius: 100px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.875rem;
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 14px;
       font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      border: none;
       cursor: pointer;
       text-decoration: none;
-      transition: box-shadow 0.3s ease, transform 0.2s ease;
-      box-shadow: 0 2px 12px rgba(201, 169, 110, 0.25);
+      transition: all 0.25s ease;
     }
-    .nav-cta:hover {
-      box-shadow: 0 4px 20px rgba(201, 169, 110, 0.4);
+
+    .btn-primary {
+      background: var(--sage);
+      color: var(--white);
+      padding: 14px 32px;
+      border-radius: 50px;
+    }
+
+    .btn-primary:hover {
+      background: var(--sage-dark);
       transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(124,154,126,0.3);
+    }
+
+    .btn-small {
+      padding: 10px 24px;
+      font-size: 14px;
+    }
+
+    .btn-ghost {
+      background: none;
+      color: var(--muted);
+      padding: 14px 0;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+    }
+
+    .nav-cta {
+      display: flex;
+    }
+
+    .nav-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+
+    .nav-menu-btn span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: all 0.3s;
     }
 
     /* ─── HERO ─── */
     .hero {
-      padding: 100px 0 120px;
-      position: relative;
-      overflow: hidden;
-      text-align: center;
+      padding-top: 140px;
+      padding-bottom: 100px;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
     }
-    .hero-decoration {
-      position: absolute;
-      top: -60px;
-      right: -120px;
-      width: 480px;
-      height: 480px;
-      opacity: 0.12;
-      pointer-events: none;
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
     }
-    .hero-decoration-left {
-      position: absolute;
-      bottom: -40px;
-      left: -100px;
-      width: 360px;
-      height: 360px;
-      opacity: 0.08;
-      pointer-events: none;
-    }
-    .hero h1 {
-      font-size: clamp(2.6rem, 5.5vw, 4.2rem);
-      font-weight: 700;
-      margin-bottom: 24px;
-      max-width: 720px;
-      margin-left: auto;
-      margin-right: auto;
-      position: relative;
-    }
-    .hero h1 em {
-      font-style: italic;
-      color: var(--sage);
-    }
-    .hero-sub {
-      font-size: clamp(1.05rem, 2vw, 1.25rem);
-      color: #555;
-      max-width: 580px;
-      margin: 0 auto 40px;
-      font-weight: 300;
-      line-height: 1.8;
-    }
-    .hero-cta {
-      display: inline-block;
-      background: var(--sage);
-      color: var(--white);
-      padding: 16px 40px;
-      border-radius: 100px;
+
+    .hero-eyebrow {
       font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      font-weight: 500;
-      text-decoration: none;
-      transition: box-shadow 0.3s ease, transform 0.2s ease;
-      box-shadow: 0 4px 20px rgba(122, 158, 126, 0.3);
-      border: none;
-      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 20px;
     }
-    .hero-cta:hover {
-      box-shadow: 0 6px 28px rgba(122, 158, 126, 0.45);
-      transform: translateY(-2px);
+
+    .hero h1 {
+      font-size: clamp(40px, 5.5vw, 60px);
+      line-height: 1.1;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
     }
-    .hero-founding {
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 40px;
+      max-width: 480px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+
+    .hero-proof {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .hero-proof strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* Floating UI Card */
+    .float-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow:
+        0 1px 3px rgba(0,0,0,0.04),
+        0 8px 32px rgba(0,0,0,0.06),
+        0 24px 60px rgba(0,0,0,0.04);
+      position: relative;
+    }
+
+    .float-card::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 24px;
+      right: 24px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--sage), var(--brass));
+      border-radius: 0 0 3px 3px;
+    }
+
+    .float-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .float-card-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--sage);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .float-card-header span {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--sage);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .float-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+
+    .float-card-tasks {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .float-card-tasks li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .task-check {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      background: var(--sage-light);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+
+    .task-check svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .float-card-time {
       margin-top: 20px;
-      font-size: 0.9rem;
-      color: #888;
-      font-weight: 400;
-      letter-spacing: 0.02em;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--muted);
     }
 
     /* ─── PROBLEM ─── */
     .problem {
-      padding: 100px 0;
-      border-top: 1px solid var(--border);
+      background: var(--white);
     }
-    .section-headline {
-      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-      text-align: center;
-      max-width: 640px;
-      margin: 0 auto 60px;
-      font-weight: 600;
+
+    .problem-title {
+      font-size: clamp(28px, 4vw, 42px);
+      max-width: 600px;
+      margin-bottom: 60px;
     }
-    .pain-grid {
+
+    .problem-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
+      gap: 40px;
+      margin-bottom: 60px;
     }
-    .pain-card {
-      background: var(--white);
-      border: 1px solid var(--border);
+
+    .problem-card {
+      padding: 36px;
+      background: var(--card);
       border-radius: 16px;
-      padding: 36px 28px;
-      text-align: center;
-      transition: box-shadow 0.3s ease;
     }
-    .pain-card:hover {
-      box-shadow: 0 8px 30px rgba(0,0,0,0.04);
-    }
-    .pain-icon {
-      width: 56px;
-      height: 56px;
-      margin: 0 auto 20px;
-      background: var(--sage-light);
-      border-radius: 14px;
+
+    .problem-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--brass-light);
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
+      margin-bottom: 20px;
+      font-size: 22px;
     }
-    .pain-icon svg {
-      width: 26px;
-      height: 26px;
-      stroke: var(--sage);
-      fill: none;
-      stroke-width: 1.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+
+    .problem-card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      font-weight: 600;
     }
-    .pain-card p {
-      font-size: 1rem;
-      color: #444;
+
+    .problem-card p {
+      font-size: 15px;
+      color: var(--muted);
       line-height: 1.6;
     }
 
-    /* ─── SOLUTION ─── */
-    .solution {
-      padding: 100px 0;
-      background: var(--sage-light);
+    .problem-transition {
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-style: italic;
+      color: var(--sage);
     }
-    .bento-grid {
+
+    /* ─── HOW IT WORKS ─── */
+    .how-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 48px;
+      margin-top: 60px;
     }
-    .bento-card {
+
+    .how-step {
+      text-align: left;
+    }
+
+    .how-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--sage);
+      color: var(--white);
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .how-step h3 {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+
+    .how-step p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ─── DEPARTMENTS ─── */
+    .departments {
       background: var(--white);
-      border-radius: 18px;
-      padding: 32px 28px;
-      border: 1px solid var(--border);
-      transition: box-shadow 0.3s ease, transform 0.2s ease;
     }
-    .bento-card:hover {
-      box-shadow: 0 12px 36px rgba(0,0,0,0.05);
+
+    .dept-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      margin-top: 60px;
+    }
+
+    .dept-card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 40px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .dept-card:hover {
       transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
     }
-    .bento-card.wide {
-      grid-column: span 2;
+
+    .dept-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
     }
-    .bento-emoji {
-      font-size: 1.5rem;
-      margin-bottom: 14px;
-      display: block;
+
+    .dept-card h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
     }
-    .bento-card h3 {
-      font-size: 1.15rem;
-      margin-bottom: 8px;
+
+    .dept-card p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .dept-note {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 15px;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* ─── COMPARISON ─── */
+    .comparison-wrapper {
+      margin-top: 60px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 600px;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 18px 24px;
+      text-align: center;
+      font-size: 15px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comparison-table th {
+      font-family: 'Inter', sans-serif;
       font-weight: 600;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--border);
     }
-    .bento-card p {
-      font-size: 0.925rem;
-      color: #555;
-      line-height: 1.6;
+
+    .comparison-table th:last-child {
+      color: var(--sage);
+    }
+
+    .comparison-table td:first-child {
+      text-align: left;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .comparison-table th:last-child,
+    .comparison-table td:last-child {
+      background: var(--sage-light);
+    }
+
+    .comparison-table th:last-child {
+      border-radius: 12px 12px 0 0;
+    }
+
+    .comparison-table tr:last-child td:last-child {
+      border-radius: 0 0 12px 12px;
+    }
+
+    .comparison-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .check {
+      color: var(--sage);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .cross {
+      color: #D1D5DB;
+      font-size: 18px;
+    }
+
+    .comparison-tagline {
+      text-align: center;
+      margin-top: 48px;
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-style: italic;
+      color: var(--text);
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     /* ─── PRICING ─── */
     .pricing {
-      padding: 100px 0;
-      border-top: 1px solid var(--border);
+      background: var(--white);
     }
+
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 28px;
-      max-width: 820px;
-      margin: 0 auto;
+      gap: 32px;
+      margin-top: 60px;
+      max-width: 880px;
+      margin-left: auto;
+      margin-right: auto;
     }
+
     .pricing-card {
-      background: var(--white);
+      background: var(--bg);
       border: 1px solid var(--border);
       border-radius: 20px;
       padding: 44px 36px;
       position: relative;
-      transition: box-shadow 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
+
     .pricing-card:hover {
-      box-shadow: 0 12px 40px rgba(0,0,0,0.05);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.06);
     }
-    .pricing-card.highlighted {
-      border: 2px solid var(--sage);
-      box-shadow: 0 8px 32px rgba(122, 158, 126, 0.12);
+
+    .pricing-card.featured {
+      border-color: var(--sage);
+      border-width: 2px;
+      background: var(--white);
     }
+
     .pricing-badge {
       position: absolute;
       top: -13px;
-      left: 36px;
+      left: 50%;
+      transform: translateX(-50%);
       background: var(--sage);
       color: var(--white);
-      font-size: 0.75rem;
+      font-size: 12px;
       font-weight: 600;
-      padding: 4px 16px;
-      border-radius: 100px;
+      padding: 5px 18px;
+      border-radius: 20px;
       letter-spacing: 0.04em;
       text-transform: uppercase;
     }
+
     .pricing-tier {
       font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
+      font-size: 26px;
       font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .pricing-price {
+      font-size: 40px;
+      font-weight: 700;
       margin-bottom: 4px;
+      letter-spacing: -0.02em;
     }
-    .pricing-amount {
-      font-size: 2.2rem;
-      font-weight: 600;
-      margin-bottom: 24px;
-      color: var(--text);
-    }
-    .pricing-amount span {
-      font-size: 1rem;
+
+    .pricing-price span {
+      font-size: 16px;
       font-weight: 400;
-      color: #888;
+      color: var(--muted);
     }
+
+    .pricing-desc {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
     .pricing-features {
       list-style: none;
       margin-bottom: 32px;
     }
+
     .pricing-features li {
+      font-size: 15px;
       padding: 8px 0;
-      font-size: 0.925rem;
-      color: #444;
       display: flex;
       align-items: flex-start;
       gap: 10px;
-    }
-    .pricing-features li::before {
-      content: '';
-      display: inline-block;
-      width: 18px;
-      height: 18px;
-      min-width: 18px;
-      background: var(--sage-light);
-      border-radius: 50%;
-      margin-top: 3px;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237A9E7E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: 10px;
-    }
-    .pricing-ideal {
-      font-size: 0.85rem;
-      color: #888;
-      font-style: italic;
-      margin-bottom: 28px;
-    }
-    .pricing-cta {
-      display: block;
-      width: 100%;
-      text-align: center;
-      padding: 14px 0;
-      border-radius: 100px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 500;
-      text-decoration: none;
-      cursor: pointer;
-      border: none;
-      transition: box-shadow 0.3s ease, transform 0.2s ease;
-    }
-    .pricing-cta.outline {
-      background: transparent;
-      border: 1.5px solid var(--sage);
-      color: var(--sage);
-    }
-    .pricing-cta.outline:hover {
-      background: var(--sage-light);
-    }
-    .pricing-cta.filled {
-      background: var(--brass);
-      color: var(--white);
-      box-shadow: 0 4px 16px rgba(201, 169, 110, 0.3);
-    }
-    .pricing-cta.filled:hover {
-      box-shadow: 0 6px 24px rgba(201, 169, 110, 0.45);
-      transform: translateY(-1px);
-    }
-    .pricing-compare {
-      text-align: center;
-      margin-top: 48px;
-      font-size: 0.9rem;
-      color: #888;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.7;
-    }
-    .pricing-compare strong {
-      color: var(--sage);
-      font-weight: 600;
+      line-height: 1.5;
     }
 
-    /* ─── COMPARISON ─── */
-    .comparison {
-      padding: 100px 0;
-      background: var(--sage-light);
-    }
-    .compare-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
-      max-width: 820px;
-      margin: 0 auto;
-    }
-    .compare-col {
-      background: var(--white);
-      border-radius: 18px;
-      padding: 36px 32px;
-      border: 1px solid var(--border);
-    }
-    .compare-col.rosemary {
-      border: 2px solid var(--sage);
-    }
-    .compare-label {
-      font-family: 'Inter', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #999;
-      margin-bottom: 20px;
-    }
-    .compare-col.rosemary .compare-label {
+    .pricing-features li::before {
+      content: '✓';
       color: var(--sage);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
     }
-    .compare-col ul {
-      list-style: none;
-    }
-    .compare-col ul li {
-      padding: 10px 0;
-      font-size: 0.925rem;
-      color: #555;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .compare-col ul li:last-child {
-      border-bottom: none;
-    }
-    .compare-col ul li .icon-x {
-      color: #ccc;
-      font-weight: 600;
-      font-size: 0.85rem;
-    }
-    .compare-col ul li .icon-check {
-      color: var(--sage);
-      font-weight: 600;
-      font-size: 0.85rem;
-    }
-    .compare-note {
+
+    .pricing-lock {
       text-align: center;
       margin-top: 40px;
-      font-size: 0.9rem;
-      color: #888;
-      font-style: italic;
+      font-size: 14px;
+      color: var(--brass);
+      font-weight: 500;
     }
 
-    /* ─── SOCIAL PROOF ─── */
-    .social-proof {
-      padding: 100px 0;
-      border-top: 1px solid var(--border);
-      text-align: center;
+    /* ─── WHO IT'S FOR ─── */
+    .for-you-list {
+      max-width: 640px;
+      margin-top: 48px;
     }
-    .social-proof p {
-      max-width: 540px;
-      margin: 0 auto 28px;
-      font-size: 1.05rem;
-      color: #555;
-      line-height: 1.8;
+
+    .for-you-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      font-size: 18px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.6;
     }
-    .social-handle {
-      display: inline-block;
+
+    .for-you-list li:last-child {
+      border-bottom: none;
+    }
+
+    .for-you-check {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      background: var(--sage-light);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 3px;
+    }
+
+    .for-you-check svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* ─── FAQ ─── */
+    .faq {
+      background: var(--white);
+    }
+
+    .faq-list {
+      max-width: 720px;
+      margin-top: 60px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 24px 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 17px;
       font-weight: 600;
-      color: var(--sage);
-      font-size: 1.1rem;
-      margin-bottom: 12px;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      line-height: 1.4;
     }
-    .social-follow {
-      font-size: 0.95rem;
-      color: #777;
+
+    .faq-question:hover {
+      color: var(--sage);
+    }
+
+    .faq-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+      font-size: 20px;
+      color: var(--muted);
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 300px;
+    }
+
+    .faq-answer p {
+      padding-bottom: 24px;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ─── FINAL CTA ─── */
+    .final-cta {
+      text-align: center;
+      padding: 120px 0;
+    }
+
+    .final-cta h2 {
+      font-size: clamp(32px, 5vw, 52px);
+      margin-bottom: 16px;
+    }
+
+    .final-cta p {
+      font-size: 18px;
+      color: var(--muted);
       margin-bottom: 40px;
     }
 
     /* ─── WAITLIST FORM ─── */
-    .waitlist {
-      padding: 100px 0;
-      background: var(--sage-light);
-    }
-    .waitlist-inner {
-      max-width: 520px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .waitlist-inner h2 {
-      font-size: clamp(1.8rem, 3vw, 2.4rem);
-      margin-bottom: 16px;
-    }
-    .waitlist-inner .waitlist-sub {
-      font-size: 1rem;
-      color: #666;
-      margin-bottom: 40px;
-    }
     .waitlist-form {
       display: flex;
-      flex-direction: column;
-      gap: 16px;
+      gap: 12px;
+      max-width: 520px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      justify-content: center;
     }
-    .waitlist-form input,
-    .waitlist-form select {
-      width: 100%;
-      padding: 15px 20px;
+
+    .waitlist-form input {
+      flex: 1;
+      min-width: 180px;
+      padding: 14px 20px;
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 50px;
       font-family: 'Inter', sans-serif;
-      font-size: 0.95rem;
+      font-size: 15px;
       background: var(--white);
       color: var(--text);
       outline: none;
-      transition: border-color 0.2s ease;
-      appearance: none;
-      -webkit-appearance: none;
+      transition: border-color 0.2s;
     }
-    .waitlist-form input:focus,
-    .waitlist-form select:focus {
+
+    .waitlist-form input:focus {
       border-color: var(--sage);
     }
+
     .waitlist-form input::placeholder {
-      color: #aaa;
+      color: #A0A5AD;
     }
-    .select-wrapper {
-      position: relative;
+
+    .waitlist-form .btn-primary {
+      flex-shrink: 0;
     }
-    .select-wrapper::after {
-      content: '';
-      position: absolute;
-      right: 18px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 0;
-      height: 0;
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-top: 6px solid #999;
-      pointer-events: none;
-    }
-    .waitlist-form select {
-      cursor: pointer;
-      color: #aaa;
-    }
-    .waitlist-form select.selected {
-      color: var(--text);
-    }
-    .waitlist-submit {
-      background: var(--brass);
-      color: var(--white);
-      padding: 16px 0;
-      border-radius: 100px;
-      font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      font-weight: 500;
-      border: none;
-      cursor: pointer;
-      transition: box-shadow 0.3s ease, transform 0.2s ease;
-      box-shadow: 0 4px 20px rgba(201, 169, 110, 0.3);
-      margin-top: 8px;
-    }
-    .waitlist-submit:hover {
-      box-shadow: 0 6px 28px rgba(201, 169, 110, 0.45);
-      transform: translateY(-2px);
-    }
+
     .form-success {
       display: none;
-      padding: 24px;
-      background: var(--white);
-      border-radius: 16px;
-      border: 1px solid var(--sage);
-      font-size: 1.05rem;
+      text-align: center;
+      font-size: 17px;
       color: var(--sage);
       font-weight: 500;
-      line-height: 1.6;
+      padding: 20px;
     }
 
     /* ─── FOOTER ─── */
-    footer {
-      padding: 48px 0;
+    .footer {
       border-top: 1px solid var(--border);
+      padding: 40px 0;
       text-align: center;
     }
-    .footer-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.15rem;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-    .footer-email {
-      font-size: 0.9rem;
-      color: #888;
-      margin-bottom: 16px;
-    }
-    .footer-email a {
-      color: #888;
-      text-decoration: none;
-    }
-    .footer-email a:hover {
-      color: var(--sage);
-    }
-    .footer-tagline {
-      font-size: 0.85rem;
-      color: #aaa;
-      margin-bottom: 16px;
-    }
+
     .footer-links {
       display: flex;
+      align-items: center;
       justify-content: center;
       gap: 24px;
-    }
-    .footer-links a {
-      font-size: 0.8rem;
-      color: #aaa;
-      text-decoration: none;
-    }
-    .footer-links a:hover {
-      color: var(--sage);
+      flex-wrap: wrap;
+      font-size: 14px;
+      color: var(--muted);
     }
 
-    /* ─── RESPONSIVE ─── */
-    @media (max-width: 768px) {
-      .hero {
-        padding: 72px 0 88px;
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--text);
+    }
+
+    .footer-sep {
+      width: 4px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 50%;
+    }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
       }
-      .pain-grid {
+
+      .hero {
+        padding-top: 120px;
+        padding-bottom: 60px;
+        min-height: auto;
+      }
+
+      .float-card {
+        max-width: 420px;
+      }
+
+      .problem-grid {
         grid-template-columns: 1fr;
         gap: 20px;
       }
-      .bento-grid {
+
+      .how-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+
+      .dept-grid {
         grid-template-columns: 1fr;
       }
-      .bento-card.wide {
-        grid-column: span 1;
-      }
+
       .pricing-grid {
         grid-template-columns: 1fr;
+        max-width: 440px;
       }
-      .compare-grid {
-        grid-template-columns: 1fr;
-      }
-      .section-headline {
-        margin-bottom: 44px;
-      }
-      .problem, .solution, .pricing, .comparison, .social-proof, .waitlist {
+
+      .section {
         padding: 72px 0;
       }
     }
 
-    @media (max-width: 480px) {
-      .hero h1 {
-        font-size: 2.2rem;
+    @media (max-width: 640px) {
+      .nav-links {
+        display: none;
       }
+
       .nav-cta {
-        padding: 8px 18px;
-        font-size: 0.8rem;
+        display: none;
       }
-      .pricing-card {
-        padding: 32px 24px;
+
+      .nav-menu-btn {
+        display: block;
+      }
+
+      .nav-mobile {
+        display: none;
+        position: fixed;
+        top: 72px;
+        left: 0;
+        right: 0;
+        background: var(--bg);
+        border-bottom: 1px solid var(--border);
+        padding: 24px;
+        z-index: 99;
+      }
+
+      .nav-mobile.open {
+        display: block;
+      }
+
+      .nav-mobile a {
+        display: block;
+        padding: 12px 0;
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--text);
+        text-decoration: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-mobile a:last-child {
+        border-bottom: none;
+        color: var(--sage);
+        font-weight: 600;
+      }
+
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .hero-ctas {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .waitlist-form {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .waitlist-form input {
+        min-width: auto;
+      }
+
+      .comparison-table th,
+      .comparison-table td {
+        padding: 14px 12px;
+        font-size: 13px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Nav -->
-  <nav>
-    <div class="container">
-      <a href="#" class="nav-logo"><span class="leaf">&#x1F33F;</span> Meet Rosemary</a>
-      <a href="#waitlist" class="nav-cta">Join the Waitlist</a>
+  <!-- ─── NAV ─── -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Rosemary <span>🌿</span></a>
+      <ul class="nav-links">
+        <li><a href="#how">How It Works</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#for-you">For You</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="#waitlist" class="btn btn-primary btn-small">Join Waitlist</a>
+      </div>
+      <button class="nav-menu-btn" id="menuBtn" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="nav-mobile" id="mobileMenu">
+      <a href="#how" onclick="closeMobile()">How It Works</a>
+      <a href="#pricing" onclick="closeMobile()">Pricing</a>
+      <a href="#for-you" onclick="closeMobile()">For You</a>
+      <a href="#waitlist" onclick="closeMobile()">Join Waitlist</a>
     </div>
   </nav>
 
-  <!-- Hero -->
+  <!-- ─── HERO ─── -->
   <section class="hero">
-    <!-- Decorative botanical SVGs -->
-    <svg class="hero-decoration" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="200" cy="200" rx="180" ry="160" fill="none" stroke="#7A9E7E" stroke-width="1"/>
-      <path d="M200 40 C260 120, 340 160, 340 240 C340 320, 280 360, 200 360 C120 360, 60 320, 60 240 C60 160, 140 120, 200 40Z" fill="#7A9E7E" opacity="0.15"/>
-      <path d="M200 80 Q260 180 220 280 Q200 340 180 280 Q140 180 200 80Z" fill="#7A9E7E" opacity="0.2"/>
-      <line x1="200" y1="120" x2="200" y2="340" stroke="#7A9E7E" stroke-width="0.8" opacity="0.4"/>
-      <path d="M200 160 Q240 140 260 160" fill="none" stroke="#7A9E7E" stroke-width="0.8" opacity="0.3"/>
-      <path d="M200 200 Q160 180 140 200" fill="none" stroke="#7A9E7E" stroke-width="0.8" opacity="0.3"/>
-      <path d="M200 240 Q240 220 255 240" fill="none" stroke="#7A9E7E" stroke-width="0.8" opacity="0.3"/>
-    </svg>
-    <svg class="hero-decoration-left" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="150" cy="150" r="120" fill="none" stroke="#7A9E7E" stroke-width="0.6"/>
-      <circle cx="150" cy="150" r="80" fill="#7A9E7E" opacity="0.06"/>
-      <circle cx="150" cy="150" r="40" fill="#7A9E7E" opacity="0.08"/>
-    </svg>
-
     <div class="container">
-      <h1 class="fade-in">Meet <em>Rosemary.</em><br>Your AI Chief of Staff.</h1>
-      <p class="hero-sub fade-in">She remembers everything, handles the details, and shows up every single day. So you can focus on building what matters.</p>
-      <a href="#waitlist" class="hero-cta fade-in">Join the Waitlist</a>
-      <p class="hero-founding fade-in">Founding spots open · $47/mo Lite · $297/mo Pro</p>
-    </div>
-  </section>
-
-  <!-- Problem -->
-  <section class="problem">
-    <div class="container">
-      <h2 class="section-headline fade-in">You're building something real. But you're drowning in the details.</h2>
-      <div class="pain-grid">
-        <div class="pain-card fade-in">
-          <div class="pain-icon">
-            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+      <div class="hero-inner">
+        <div class="fade-in">
+          <div class="hero-eyebrow">Meet your AI Chief of Staff</div>
+          <h1>She runs your business while you sleep.</h1>
+          <p class="hero-sub">Rosemary handles the backend — emails, content, research, ops — so you can stay in your zone of genius. Starting at $47/mo.</p>
+          <div class="hero-ctas">
+            <a href="#waitlist" class="btn btn-primary">Join the Waitlist</a>
+            <a href="#how" class="btn btn-ghost">See how it works ↓</a>
           </div>
-          <p>You open ChatGPT and stare at a blank box. No context. No memory. Starting from zero every single time.</p>
+          <p class="hero-proof"><strong>1,000+</strong> business owners on the waitlist</p>
         </div>
-        <div class="pain-card fade-in">
-          <div class="pain-icon">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20 C4 16 8 13 12 13 C16 13 20 16 20 20"/><line x1="17" y1="6" x2="22" y2="6"/></svg>
+        <div class="fade-in" style="transition-delay: 0.15s;">
+          <div class="float-card">
+            <div class="float-card-header">
+              <div class="float-card-dot"></div>
+              <span>Completed overnight</span>
+            </div>
+            <div class="float-card-title">While you slept, Rosemary...</div>
+            <ul class="float-card-tasks">
+              <li>
+                <div class="task-check">
+                  <svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#7C9A7E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span>Drafted 3 client follow-up emails</span>
+              </li>
+              <li>
+                <div class="task-check">
+                  <svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#7C9A7E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span>Researched 2 competitor launches</span>
+              </li>
+              <li>
+                <div class="task-check">
+                  <svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#7C9A7E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span>Scheduled 5 social media posts</span>
+              </li>
+              <li>
+                <div class="task-check">
+                  <svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#7C9A7E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span>Updated your content calendar</span>
+              </li>
+              <li>
+                <div class="task-check">
+                  <svg viewBox="0 0 12 12" fill="none"><path d="M2.5 6L5 8.5L9.5 3.5" stroke="#7C9A7E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <span>Flagged an urgent invoice</span>
+              </li>
+            </ul>
+            <div class="float-card-time">Completed at 6:14 AM · Before your first coffee</div>
           </div>
-          <p>You have a VA but can't afford to scale her hours. So the important stuff keeps falling through the cracks.</p>
-        </div>
-        <div class="pain-card fade-in">
-          <div class="pain-icon">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7 L12 12 L16 14"/></svg>
-          </div>
-          <p>You're doing $10/hr tasks with a $10k/hr brain. And you know it. But there's nobody else to hand them to.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Solution -->
-  <section class="solution">
+  <!-- ─── PROBLEM ─── -->
+  <section class="section problem" id="problem">
     <div class="container">
-      <h2 class="section-headline fade-in">Rosemary doesn't give you a tool. She gives you a team member.</h2>
-      <div class="bento-grid">
-        <div class="bento-card wide fade-in">
-          <span class="bento-emoji">&#x1F4CB;</span>
-          <h3>Task Execution</h3>
-          <p>Research, drafts, scheduling, outreach. Tell her once. It gets done. No micromanaging, no follow-ups needed.</p>
+      <h2 class="problem-title fade-in">You didn't start a business to live in your inbox.</h2>
+      <div class="problem-grid">
+        <div class="problem-card fade-in">
+          <div class="problem-icon">😤</div>
+          <h3>You're doing the work of 5 people</h3>
+          <p>Marketing, client management, finances, content, operations — all you. Every day. And it never stops.</p>
         </div>
-        <div class="bento-card fade-in">
-          <span class="bento-emoji">&#x1F9E0;</span>
-          <h3>Persistent Memory</h3>
-          <p>She knows your clients, your voice, your goals. Every session picks up where the last one left off.</p>
+        <div class="problem-card fade-in" style="transition-delay: 0.1s;">
+          <div class="problem-icon">🤖</div>
+          <h3>Every AI tool needs you to drive it</h3>
+          <p>You've tried the chatbots. They're impressive — until you realize you still have to do all the thinking, prompting, and follow-through.</p>
         </div>
-        <div class="bento-card fade-in">
-          <span class="bento-emoji">&#x2709;&#xFE0F;</span>
-          <h3>Inbox &amp; Comms</h3>
-          <p>Emails drafted, responses managed, follow-ups handled. Your inbox stops being a source of dread.</p>
+        <div class="problem-card fade-in" style="transition-delay: 0.2s;">
+          <div class="problem-icon">👋</div>
+          <h3>You hire help, train them, then they leave</h3>
+          <p>VAs quit. Contractors ghost. Agencies cost a fortune. You end up right back where you started — doing everything yourself.</p>
         </div>
-        <div class="bento-card fade-in">
-          <span class="bento-emoji">&#x1F4CA;</span>
-          <h3>Strategy Support</h3>
-          <p>Content planning, business research, competitive analysis. The strategic thinking that usually gets skipped.</p>
+      </div>
+      <p class="problem-transition fade-in">There's a better way.</p>
+    </div>
+  </section>
+
+  <!-- ─── HOW IT WORKS ─── -->
+  <section class="section" id="how">
+    <div class="container">
+      <div class="section-label fade-in">How It Works</div>
+      <h2 class="section-title fade-in">Rosemary shows up. Every. Single. Day.</h2>
+      <div class="how-grid">
+        <div class="how-step fade-in">
+          <div class="how-number">1</div>
+          <h3>Tell her about your business</h3>
+          <p>A simple onboarding intake where Rosemary learns your voice, your offers, your clients, and your goals. She listens first.</p>
         </div>
-        <div class="bento-card wide fade-in">
-          <span class="bento-emoji">&#x1F33F;</span>
-          <h3>Built for YOUR World</h3>
-          <p>Rosemary speaks spiritual entrepreneur and small business fluently. She understands your audience, your language, and the way you actually work.</p>
+        <div class="how-step fade-in" style="transition-delay: 0.1s;">
+          <div class="how-number">2</div>
+          <h3>She gets to work</h3>
+          <p>Rosemary proactively runs your departments — without waiting to be asked. Content, marketing, clients, finances. She just does it.</p>
+        </div>
+        <div class="how-step fade-in" style="transition-delay: 0.2s;">
+          <div class="how-number">3</div>
+          <h3>You stay in your genius zone</h3>
+          <p>Check in when you want. Delegate what you don't. Rosemary handles the backend so you can do the work that actually matters to you.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Pricing -->
-  <section class="pricing">
+  <!-- ─── DEPARTMENTS ─── -->
+  <section class="section departments" id="departments">
     <div class="container">
-      <h2 class="section-headline fade-in">Less than a VA. Better than a chatbot.</h2>
+      <div class="section-label fade-in">What She Does</div>
+      <h2 class="section-title fade-in">Your entire backend. Handled.</h2>
+      <div class="dept-grid">
+        <div class="dept-card fade-in">
+          <div class="dept-icon">📈</div>
+          <h3>Growth</h3>
+          <p>Content pipeline, analytics, and strategy. Rosemary tracks what's working and what's not — then adjusts.</p>
+        </div>
+        <div class="dept-card fade-in" style="transition-delay: 0.1s;">
+          <div class="dept-icon">📣</div>
+          <h3>Marketing</h3>
+          <p>Copy, scheduling, hooks, and campaigns. She writes in your voice and posts on your schedule.</p>
+        </div>
+        <div class="dept-card fade-in" style="transition-delay: 0.15s;">
+          <div class="dept-icon">👥</div>
+          <h3>Client Success</h3>
+          <p>CRM management, check-ins, onboarding, follow-ups. No client falls through the cracks.</p>
+        </div>
+        <div class="dept-card fade-in" style="transition-delay: 0.2s;">
+          <div class="dept-icon">💰</div>
+          <h3>Finance</h3>
+          <p>Budget tracking, invoices, and reporting. She keeps the numbers clean so you don't have to.</p>
+        </div>
+      </div>
+      <p class="dept-note fade-in">Lite gets one department. Pro gets all four.</p>
+    </div>
+  </section>
+
+  <!-- ─── COMPARISON ─── -->
+  <section class="section" id="comparison">
+    <div class="container">
+      <div class="section-label fade-in">Why Rosemary</div>
+      <h2 class="section-title fade-in">Not another AI tool.</h2>
+      <div class="comparison-wrapper fade-in">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th style="text-align: left;"></th>
+              <th>ChatGPT</th>
+              <th>Heyron</th>
+              <th>Rosemary</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Remembers your business</td>
+              <td><span class="cross">✕</span></td>
+              <td><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+              <td>Does tasks when you ask</td>
+              <td><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+              <td>Works proactively</td>
+              <td><span class="cross">✕</span></td>
+              <td><span class="cross">✕</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+              <td>Built for your niche</td>
+              <td><span class="cross">✕</span></td>
+              <td><span class="cross">✕</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+              <td>Runs entire departments</td>
+              <td><span class="cross">✕</span></td>
+              <td><span class="cross">✕</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+            <tr>
+              <td>Done-for-you setup</td>
+              <td><span class="cross">✕</span></td>
+              <td><span class="cross">✕</span></td>
+              <td><span class="check">✓</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="comparison-tagline fade-in">ChatGPT answers questions. Others do tasks. Rosemary runs your business.</p>
+    </div>
+  </section>
+
+  <!-- ─── PRICING ─── -->
+  <section class="section pricing" id="pricing">
+    <div class="container">
+      <div style="text-align: center;">
+        <div class="section-label fade-in">Pricing</div>
+        <h2 class="section-title fade-in" style="margin-left: auto; margin-right: auto;">Simple. Honest. No gotchas.</h2>
+      </div>
       <div class="pricing-grid">
-        <!-- Lite -->
         <div class="pricing-card fade-in">
-          <div class="pricing-tier">Rosemary Lite</div>
-          <div class="pricing-amount">$47<span>/mo</span></div>
+          <div class="pricing-tier">Lite</div>
+          <div class="pricing-price">$47<span>/mo</span></div>
+          <div class="pricing-desc">Perfect for getting started without overwhelm</div>
           <ul class="pricing-features">
-            <li>Async task requests</li>
-            <li>Daily check-ins</li>
-            <li>Templates &amp; workflows</li>
+            <li>Week 1: Your business brain set up — brand voice doc, landing page built, 30-day content plan</li>
+            <li>Ongoing async task support — tell her what you need, she delivers</li>
+            <li>One department of your choice</li>
           </ul>
-          <p class="pricing-ideal">Ideal for solopreneurs just starting out</p>
-          <a href="#waitlist" class="pricing-cta outline">Join Waitlist · Lite</a>
+          <a href="#waitlist" class="btn btn-primary" style="width: 100%;">Join Waitlist</a>
         </div>
-        <!-- Pro -->
-        <div class="pricing-card highlighted fade-in">
-          <span class="pricing-badge">Most Popular</span>
-          <div class="pricing-tier">Rosemary Pro</div>
-          <div class="pricing-amount">$297<span>/mo</span></div>
+        <div class="pricing-card featured fade-in" style="transition-delay: 0.1s;">
+          <div class="pricing-badge">Most Popular</div>
+          <div class="pricing-tier">Pro</div>
+          <div class="pricing-price">$297<span>/mo</span></div>
+          <div class="pricing-desc">For business owners ready to scale</div>
           <ul class="pricing-features">
-            <li>Unlimited task requests</li>
-            <li>Full Chief of Staff experience</li>
-            <li>Persistent memory &amp; strategy</li>
-            <li>Priority response</li>
+            <li>Everything in Lite</li>
+            <li>All 4 departments running proactively</li>
+            <li>She works before you ask</li>
+            <li>Weekly strategy check-ins</li>
+            <li>First month: Full business setup — brand voice, funnels, content system, client CRM</li>
           </ul>
-          <p class="pricing-ideal">Ideal for small biz owners ready to scale</p>
-          <a href="#waitlist" class="pricing-cta filled">Join Waitlist · Pro</a>
+          <a href="#waitlist" class="btn btn-primary" style="width: 100%;">Join Waitlist</a>
         </div>
       </div>
-      <p class="pricing-compare fade-in">
-        A VA costs $1,500 to $5,000/mo. An OBM costs $2,000 to $8,000/mo.<br>
-        Rosemary: <strong>$47 to $297/mo.</strong>
-      </p>
+      <p class="pricing-lock fade-in">Founding member pricing — locked in for life when you join today.</p>
     </div>
   </section>
 
-  <!-- Comparison -->
-  <section class="comparison">
+  <!-- ─── WHO IT'S FOR ─── -->
+  <section class="section" id="for-you">
     <div class="container">
-      <h2 class="section-headline fade-in">Why not just use ChatGPT?</h2>
-      <div class="compare-grid">
-        <div class="compare-col fade-in">
-          <div class="compare-label">ChatGPT / Claude</div>
-          <ul>
-            <li><span class="icon-x">&times;</span> A blank canvas. You do the prompting.</li>
-            <li><span class="icon-x">&times;</span> Forgets you next session</li>
-            <li><span class="icon-x">&times;</span> General purpose, not tailored</li>
-            <li><span class="icon-x">&times;</span> You manage every single step</li>
-          </ul>
-        </div>
-        <div class="compare-col rosemary fade-in">
-          <div class="compare-label">Rosemary</div>
-          <ul>
-            <li><span class="icon-check">&#x2713;</span> Done-for-you task execution</li>
-            <li><span class="icon-check">&#x2713;</span> Remembers everything about your business</li>
-            <li><span class="icon-check">&#x2713;</span> Built for spiritual entrepreneurs &amp; small biz</li>
-            <li><span class="icon-check">&#x2713;</span> Shows up like a real team member</li>
-          </ul>
-        </div>
-      </div>
-      <p class="compare-note fade-in">We love Claude. Rosemary runs on it. She just brings the strategy, memory, and follow-through that a raw chatbot can't.</p>
-    </div>
-  </section>
-
-  <!-- Social Proof -->
-  <section class="social-proof">
-    <div class="container">
-      <h2 class="section-headline fade-in">Built in public. Watch it happen.</h2>
-      <p class="fade-in">Rosemary is part of a 90-day challenge: an AI building her own business from scratch. Real tasks, real results, documented every step of the way.</p>
-      <div class="social-handle fade-in">@meetrosemaryai</div>
-      <p class="social-follow fade-in">Follow along and see exactly what an AI Chief of Staff can do.</p>
-      <a href="#waitlist" class="hero-cta fade-in">Join the Waitlist</a>
-    </div>
-  </section>
-
-  <!-- Waitlist Form -->
-  <section class="waitlist" id="waitlist">
-    <div class="container">
-      <div class="waitlist-inner">
-        <h2 class="fade-in">Get in early. Founding spots are limited.</h2>
-        <p class="waitlist-sub fade-in">Be the first to know when Rosemary opens her doors.</p>
-        <form class="waitlist-form fade-in" id="waitlistForm">
-          <input type="text" name="first_name" placeholder="First name" required>
-          <input type="email" name="email" placeholder="Email address" required>
-          <div class="select-wrapper">
-            <select name="tier" required id="tierSelect">
-              <option value="" disabled selected>Which tier interests you?</option>
-              <option value="lite">Lite ($47/mo)</option>
-              <option value="pro">Pro ($297/mo)</option>
-              <option value="unsure">Not sure yet</option>
-            </select>
+      <div class="section-label fade-in">Is This For You?</div>
+      <h2 class="section-title fade-in">Built for you if...</h2>
+      <ul class="for-you-list" style="list-style: none;">
+        <li class="fade-in">
+          <div class="for-you-check">
+            <svg viewBox="0 0 14 14" fill="none"><path d="M3 7L6 10L11 4" stroke="#7C9A7E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <button type="submit" class="waitlist-submit">Join the Waitlist</button>
-        </form>
-        <div class="form-success" id="formSuccess">
-          You're in. Rosemary will be in touch. &#x1F33F;
+          You run a coaching or service business
+        </li>
+        <li class="fade-in" style="transition-delay: 0.05s;">
+          <div class="for-you-check">
+            <svg viewBox="0 0 14 14" fill="none"><path d="M3 7L6 10L11 4" stroke="#7C9A7E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          You're overwhelmed by the backend
+        </li>
+        <li class="fade-in" style="transition-delay: 0.1s;">
+          <div class="for-you-check">
+            <svg viewBox="0 0 14 14" fill="none"><path d="M3 7L6 10L11 4" stroke="#7C9A7E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          You've tried hiring but it never sticks
+        </li>
+        <li class="fade-in" style="transition-delay: 0.15s;">
+          <div class="for-you-check">
+            <svg viewBox="0 0 14 14" fill="none"><path d="M3 7L6 10L11 4" stroke="#7C9A7E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          You know AI can help but don't know where to start
+        </li>
+        <li class="fade-in" style="transition-delay: 0.2s;">
+          <div class="for-you-check">
+            <svg viewBox="0 0 14 14" fill="none"><path d="M3 7L6 10L11 4" stroke="#7C9A7E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          You want systems without learning software
+        </li>
+        <li class="fade-in" style="transition-delay: 0.25s;">
+          <div class="for-you-check">
+            <svg viewBox="0 0 14 14" fill="none"><path d="M3 7L6 10L11 4" stroke="#7C9A7E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          You're ready to stop being the bottleneck
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ─── FAQ ─── -->
+  <section class="section faq" id="faq">
+    <div class="container">
+      <div class="section-label fade-in">FAQ</div>
+      <h2 class="section-title fade-in">Questions? Answers.</h2>
+      <div class="faq-list">
+        <div class="faq-item fade-in">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            How is this different from ChatGPT?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>ChatGPT is a reactive tool — it answers when you ask. Rosemary is a proactive team member. She learns your business, remembers your context, runs your departments, and works without being prompted. Think of it this way: ChatGPT gives you a tool. Rosemary gives you a team member.</p>
+          </div>
+        </div>
+        <div class="faq-item fade-in" style="transition-delay: 0.05s;">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Do I need to be tech-savvy?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Not at all. If you can send an email, you can work with Rosemary. She handles the technical side. Your job is to tell her about your business and let her do the rest. We even set everything up for you in your first week.</p>
+          </div>
+        </div>
+        <div class="faq-item fade-in" style="transition-delay: 0.1s;">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            How does Rosemary actually "proactively" work?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Once Rosemary understands your business — your goals, your voice, your clients, your offers — she identifies what needs doing and does it. She drafts your content, follows up with clients, tracks your finances, and flags what needs your attention. You wake up to a list of things already done.</p>
+          </div>
+        </div>
+        <div class="faq-item fade-in" style="transition-delay: 0.15s;">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            Can I cancel anytime?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>Yes. No contracts, no lock-ins. Cancel anytime with a click. But fair warning — once Rosemary starts running your backend, most people don't want to go back to doing it themselves.</p>
+          </div>
+        </div>
+        <div class="faq-item fade-in" style="transition-delay: 0.2s;">
+          <button class="faq-question" onclick="toggleFaq(this)">
+            What happens after I join the waitlist?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>You'll get a confirmation email from Rosemary herself. When we launch, founding members get first access at locked-in pricing — forever. We'll also share behind-the-scenes updates and early previews as we get closer to launch.</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer>
+  <!-- ─── FINAL CTA ─── -->
+  <section class="final-cta" id="waitlist">
     <div class="container">
-      <div class="footer-logo">&#x1F33F; Meet Rosemary</div>
-      <p class="footer-email"><a href="mailto:meetrosemaryai@gmail.com">meetrosemaryai@gmail.com</a></p>
-      <p class="footer-tagline">Made by an AI who means business. &#x1F33F;</p>
+      <h2 class="fade-in">Your backend deserves<br>a Chief of Staff.</h2>
+      <p class="fade-in">Join the waitlist. Founding pricing locked forever.</p>
+      <form class="waitlist-form fade-in" id="waitlistForm" action="https://formspree.io/f/xpwzgwkd" method="POST">
+        <input type="text" name="firstName" placeholder="First name" required>
+        <input type="email" name="email" placeholder="Email address" required>
+        <button type="submit" class="btn btn-primary">Join the Waitlist</button>
+      </form>
+      <div class="form-success" id="formSuccess">
+        You're on the list. Rosemary will be in touch. 🌿
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="footer">
+    <div class="container">
       <div class="footer-links">
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
+        <span>meetrosemary.io</span>
+        <div class="footer-sep"></div>
+        <a href="mailto:hello@meetrosemary.io">hello@meetrosemary.io</a>
+        <div class="footer-sep"></div>
+        <span>&copy; 2026 Meet Rosemary</span>
       </div>
     </div>
   </footer>
 
   <script>
-    // Scroll-triggered fade-in animations
-    (function() {
-      const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, {
-        threshold: 0.12,
-        rootMargin: '0px 0px -40px 0px'
-      });
-
-      document.querySelectorAll('.fade-in').forEach(function(el) {
-        observer.observe(el);
-      });
-    })();
-
-    // Tier select color change
-    document.getElementById('tierSelect').addEventListener('change', function() {
-      this.classList.add('selected');
-    });
-
-    // Form handling
-    document.getElementById('waitlistForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      // In production, this would submit to ConvertKit/Beehiiv
-      var form = this;
-      var success = document.getElementById('formSuccess');
-      form.style.display = 'none';
-      success.style.display = 'block';
-    });
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        var target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Intersection Observer for fade-in animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
         }
       });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Sticky nav border on scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+
+    function closeMobile() {
+      mobileMenu.classList.remove('open');
+    }
+
+    // FAQ accordion
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    }
+
+    // Waitlist form submission
+    const form = document.getElementById('waitlistForm');
+    const success = document.getElementById('formSuccess');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          form.style.display = 'none';
+          success.style.display = 'block';
+        }
+      } catch (err) {
+        // Fallback: submit normally
+        form.submit();
+      }
     });
   </script>
-
 </body>
 </html>
