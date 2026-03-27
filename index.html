@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meet Rosemary — Your AI Chief of Staff</title>
+  <meta name="description" content="Rosemary is your AI Chief of Staff. She remembers everything, handles the details, and shows up every single day. Starting at $47/mo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #FAFAF8;
+      --text: #1A1A1A;
+      --sage: #7A9E7E;
+      --sage-light: #EFF4F0;
+      --brass: #C9A96E;
+      --border: #E8E8E4;
+      --white: #FFFFFF;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', Georgia, serif;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Fade-in animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-logo .leaf {
+      color: var(--sage);
+      font-size: 1.1rem;
+    }
+    .nav-cta {
+      background: var(--brass);
+      color: var(--white);
+      border: none;
+      padding: 10px 24px;
+      border-radius: 100px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: box-shadow 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 2px 12px rgba(201, 169, 110, 0.25);
+    }
+    .nav-cta:hover {
+      box-shadow: 0 4px 20px rgba(201, 169, 110, 0.4);
+      transform: translateY(-1px);
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      padding: 100px 0 120px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .hero-decoration {
+      position: absolute;
+      top: -60px;
+      right: -120px;
+      width: 480px;
+      height: 480px;
+      opacity: 0.12;
+      pointer-events: none;
+    }
+    .hero-decoration-left {
+      position: absolute;
+      bottom: -40px;
+      left: -100px;
+      width: 360px;
+      height: 360px;
+      opacity: 0.08;
+      pointer-events: none;
+    }
+    .hero h1 {
+      font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+      font-weight: 700;
+      margin-bottom: 24px;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--sage);
+    }
+    .hero-sub {
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      color: #555;
+      max-width: 580px;
+      margin: 0 auto 40px;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+    .hero-cta {
+      display: inline-block;
+      background: var(--sage);
+      color: var(--white);
+      padding: 16px 40px;
+      border-radius: 100px;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: box-shadow 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 20px rgba(122, 158, 126, 0.3);
+      border: none;
+      cursor: pointer;
+    }
+    .hero-cta:hover {
+      box-shadow: 0 6px 28px rgba(122, 158, 126, 0.45);
+      transform: translateY(-2px);
+    }
+    .hero-founding {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      color: #888;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    /* ─── PROBLEM ─── */
+    .problem {
+      padding: 100px 0;
+      border-top: 1px solid var(--border);
+    }
+    .section-headline {
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 60px;
+      font-weight: 600;
+    }
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .pain-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 36px 28px;
+      text-align: center;
+      transition: box-shadow 0.3s ease;
+    }
+    .pain-card:hover {
+      box-shadow: 0 8px 30px rgba(0,0,0,0.04);
+    }
+    .pain-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 20px;
+      background: var(--sage-light);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pain-icon svg {
+      width: 26px;
+      height: 26px;
+      stroke: var(--sage);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .pain-card p {
+      font-size: 1rem;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    /* ─── SOLUTION ─── */
+    .solution {
+      padding: 100px 0;
+      background: var(--sage-light);
+    }
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .bento-card {
+      background: var(--white);
+      border-radius: 18px;
+      padding: 32px 28px;
+      border: 1px solid var(--border);
+      transition: box-shadow 0.3s ease, transform 0.2s ease;
+    }
+    .bento-card:hover {
+      box-shadow: 0 12px 36px rgba(0,0,0,0.05);
+      transform: translateY(-2px);
+    }
+    .bento-card.wide {
+      grid-column: span 2;
+    }
+    .bento-emoji {
+      font-size: 1.5rem;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .bento-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .bento-card p {
+      font-size: 0.925rem;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    /* ─── PRICING ─── */
+    .pricing {
+      padding: 100px 0;
+      border-top: 1px solid var(--border);
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .pricing-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 44px 36px;
+      position: relative;
+      transition: box-shadow 0.3s ease;
+    }
+    .pricing-card:hover {
+      box-shadow: 0 12px 40px rgba(0,0,0,0.05);
+    }
+    .pricing-card.highlighted {
+      border: 2px solid var(--sage);
+      box-shadow: 0 8px 32px rgba(122, 158, 126, 0.12);
+    }
+    .pricing-badge {
+      position: absolute;
+      top: -13px;
+      left: 36px;
+      background: var(--sage);
+      color: var(--white);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 16px;
+      border-radius: 100px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .pricing-tier {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .pricing-amount {
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+    .pricing-amount span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #888;
+    }
+    .pricing-features {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+    .pricing-features li {
+      padding: 8px 0;
+      font-size: 0.925rem;
+      color: #444;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .pricing-features li::before {
+      content: '';
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      background: var(--sage-light);
+      border-radius: 50%;
+      margin-top: 3px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237A9E7E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 10px;
+    }
+    .pricing-ideal {
+      font-size: 0.85rem;
+      color: #888;
+      font-style: italic;
+      margin-bottom: 28px;
+    }
+    .pricing-cta {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 14px 0;
+      border-radius: 100px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: box-shadow 0.3s ease, transform 0.2s ease;
+    }
+    .pricing-cta.outline {
+      background: transparent;
+      border: 1.5px solid var(--sage);
+      color: var(--sage);
+    }
+    .pricing-cta.outline:hover {
+      background: var(--sage-light);
+    }
+    .pricing-cta.filled {
+      background: var(--brass);
+      color: var(--white);
+      box-shadow: 0 4px 16px rgba(201, 169, 110, 0.3);
+    }
+    .pricing-cta.filled:hover {
+      box-shadow: 0 6px 24px rgba(201, 169, 110, 0.45);
+      transform: translateY(-1px);
+    }
+    .pricing-compare {
+      text-align: center;
+      margin-top: 48px;
+      font-size: 0.9rem;
+      color: #888;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+    }
+    .pricing-compare strong {
+      color: var(--sage);
+      font-weight: 600;
+    }
+
+    /* ─── COMPARISON ─── */
+    .comparison {
+      padding: 100px 0;
+      background: var(--sage-light);
+    }
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      max-width: 820px;
+      margin: 0 auto;
+    }
+    .compare-col {
+      background: var(--white);
+      border-radius: 18px;
+      padding: 36px 32px;
+      border: 1px solid var(--border);
+    }
+    .compare-col.rosemary {
+      border: 2px solid var(--sage);
+    }
+    .compare-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #999;
+      margin-bottom: 20px;
+    }
+    .compare-col.rosemary .compare-label {
+      color: var(--sage);
+    }
+    .compare-col ul {
+      list-style: none;
+    }
+    .compare-col ul li {
+      padding: 10px 0;
+      font-size: 0.925rem;
+      color: #555;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .compare-col ul li:last-child {
+      border-bottom: none;
+    }
+    .compare-col ul li .icon-x {
+      color: #ccc;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+    .compare-col ul li .icon-check {
+      color: var(--sage);
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+    .compare-note {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #888;
+      font-style: italic;
+    }
+
+    /* ─── SOCIAL PROOF ─── */
+    .social-proof {
+      padding: 100px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .social-proof p {
+      max-width: 540px;
+      margin: 0 auto 28px;
+      font-size: 1.05rem;
+      color: #555;
+      line-height: 1.8;
+    }
+    .social-handle {
+      display: inline-block;
+      font-weight: 600;
+      color: var(--sage);
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+    }
+    .social-follow {
+      font-size: 0.95rem;
+      color: #777;
+      margin-bottom: 40px;
+    }
+
+    /* ─── WAITLIST FORM ─── */
+    .waitlist {
+      padding: 100px 0;
+      background: var(--sage-light);
+    }
+    .waitlist-inner {
+      max-width: 520px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .waitlist-inner h2 {
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      margin-bottom: 16px;
+    }
+    .waitlist-inner .waitlist-sub {
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 40px;
+    }
+    .waitlist-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .waitlist-form input,
+    .waitlist-form select {
+      width: 100%;
+      padding: 15px 20px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      background: var(--white);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s ease;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .waitlist-form input:focus,
+    .waitlist-form select:focus {
+      border-color: var(--sage);
+    }
+    .waitlist-form input::placeholder {
+      color: #aaa;
+    }
+    .select-wrapper {
+      position: relative;
+    }
+    .select-wrapper::after {
+      content: '';
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid #999;
+      pointer-events: none;
+    }
+    .waitlist-form select {
+      cursor: pointer;
+      color: #aaa;
+    }
+    .waitlist-form select.selected {
+      color: var(--text);
+    }
+    .waitlist-submit {
+      background: var(--brass);
+      color: var(--white);
+      padding: 16px 0;
+      border-radius: 100px;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 4px 20px rgba(201, 169, 110, 0.3);
+      margin-top: 8px;
+    }
+    .waitlist-submit:hover {
+      box-shadow: 0 6px 28px rgba(201, 169, 110, 0.45);
+      transform: translateY(-2px);
+    }
+    .form-success {
+      display: none;
+      padding: 24px;
+      background: var(--white);
+      border-radius: 16px;
+      border: 1px solid var(--sage);
+      font-size: 1.05rem;
+      color: var(--sage);
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 48px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .footer-email {
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 16px;
+    }
+    .footer-email a {
+      color: #888;
+      text-decoration: none;
+    }
+    .footer-email a:hover {
+      color: var(--sage);
+    }
+    .footer-tagline {
+      font-size: 0.85rem;
+      color: #aaa;
+      margin-bottom: 16px;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+    }
+    .footer-links a {
+      font-size: 0.8rem;
+      color: #aaa;
+      text-decoration: none;
+    }
+    .footer-links a:hover {
+      color: var(--sage);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .hero {
+        padding: 72px 0 88px;
+      }
+      .pain-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .bento-grid {
+        grid-template-columns: 1fr;
+      }
+      .bento-card.wide {
+        grid-column: span 1;
+      }
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+      .compare-grid {
+        grid-template-columns: 1fr;
+      }
+      .section-headline {
+        margin-bottom: 44px;
+      }
+      .problem, .solution, .pricing, .comparison, .social-proof, .waitlist {
+        padding: 72px 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .nav-cta {
+        padding: 8px 18px;
+        font-size: 0.8rem;
+      }
+      .pricing-card {
+        padding: 32px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="container">
+      <a href="#" class="nav-logo"><span class="leaf">&#x1F33F;</span> Meet Rosemary</a>
+      <a href="#waitlist" class="nav-cta">Join the Waitlist</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <!-- Decorative botanical SVGs -->
+    <svg class="hero-decoration" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="200" cy="200" rx="180" ry="160" fill="none" stroke="#7A9E7E" stroke-width="1"/>
+      <path d="M200 40 C260 120, 340 160, 340 240 C340 320, 280 360, 200 360 C120 360, 60 320, 60 240 C60 160, 140 120, 200 40Z" fill="#7A9E7E" opacity="0.15"/>
+      <path d="M200 80 Q260 180 220 280 Q200 340 180 280 Q140 180 200 80Z" fill="#7A9E7E" opacity="0.2"/>
+      <line x1="200" y1="120" x2="200" y2="340" stroke="#7A9E7E" stroke-width="0.8" opacity="0.4"/>
+      <path d="M200 160 Q240 140 260 160" fill="none" stroke="#7A9E7E" stroke-width="0.8" opacity="0.3"/>
+      <path d="M200 200 Q160 180 140 200" fill="none" stroke="#7A9E7E" stroke-width="0.8" opacity="0.3"/>
+      <path d="M200 240 Q240 220 255 240" fill="none" stroke="#7A9E7E" stroke-width="0.8" opacity="0.3"/>
+    </svg>
+    <svg class="hero-decoration-left" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="150" cy="150" r="120" fill="none" stroke="#7A9E7E" stroke-width="0.6"/>
+      <circle cx="150" cy="150" r="80" fill="#7A9E7E" opacity="0.06"/>
+      <circle cx="150" cy="150" r="40" fill="#7A9E7E" opacity="0.08"/>
+    </svg>
+
+    <div class="container">
+      <h1 class="fade-in">Meet <em>Rosemary.</em><br>Your AI Chief of Staff.</h1>
+      <p class="hero-sub fade-in">She remembers everything, handles the details, and shows up every single day. So you can focus on building what matters.</p>
+      <a href="#waitlist" class="hero-cta fade-in">Join the Waitlist</a>
+      <p class="hero-founding fade-in">Founding spots open · $47/mo Lite · $297/mo Pro</p>
+    </div>
+  </section>
+
+  <!-- Problem -->
+  <section class="problem">
+    <div class="container">
+      <h2 class="section-headline fade-in">You're building something real. But you're drowning in the details.</h2>
+      <div class="pain-grid">
+        <div class="pain-card fade-in">
+          <div class="pain-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+          </div>
+          <p>You open ChatGPT and stare at a blank box. No context. No memory. Starting from zero every single time.</p>
+        </div>
+        <div class="pain-card fade-in">
+          <div class="pain-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20 C4 16 8 13 12 13 C16 13 20 16 20 20"/><line x1="17" y1="6" x2="22" y2="6"/></svg>
+          </div>
+          <p>You have a VA but can't afford to scale her hours. So the important stuff keeps falling through the cracks.</p>
+        </div>
+        <div class="pain-card fade-in">
+          <div class="pain-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7 L12 12 L16 14"/></svg>
+          </div>
+          <p>You're doing $10/hr tasks with a $10k/hr brain. And you know it. But there's nobody else to hand them to.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solution -->
+  <section class="solution">
+    <div class="container">
+      <h2 class="section-headline fade-in">Rosemary doesn't give you a tool. She gives you a team member.</h2>
+      <div class="bento-grid">
+        <div class="bento-card wide fade-in">
+          <span class="bento-emoji">&#x1F4CB;</span>
+          <h3>Task Execution</h3>
+          <p>Research, drafts, scheduling, outreach. Tell her once. It gets done. No micromanaging, no follow-ups needed.</p>
+        </div>
+        <div class="bento-card fade-in">
+          <span class="bento-emoji">&#x1F9E0;</span>
+          <h3>Persistent Memory</h3>
+          <p>She knows your clients, your voice, your goals. Every session picks up where the last one left off.</p>
+        </div>
+        <div class="bento-card fade-in">
+          <span class="bento-emoji">&#x2709;&#xFE0F;</span>
+          <h3>Inbox &amp; Comms</h3>
+          <p>Emails drafted, responses managed, follow-ups handled. Your inbox stops being a source of dread.</p>
+        </div>
+        <div class="bento-card fade-in">
+          <span class="bento-emoji">&#x1F4CA;</span>
+          <h3>Strategy Support</h3>
+          <p>Content planning, business research, competitive analysis. The strategic thinking that usually gets skipped.</p>
+        </div>
+        <div class="bento-card wide fade-in">
+          <span class="bento-emoji">&#x1F33F;</span>
+          <h3>Built for YOUR World</h3>
+          <p>Rosemary speaks spiritual entrepreneur and small business fluently. She understands your audience, your language, and the way you actually work.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="pricing">
+    <div class="container">
+      <h2 class="section-headline fade-in">Less than a VA. Better than a chatbot.</h2>
+      <div class="pricing-grid">
+        <!-- Lite -->
+        <div class="pricing-card fade-in">
+          <div class="pricing-tier">Rosemary Lite</div>
+          <div class="pricing-amount">$47<span>/mo</span></div>
+          <ul class="pricing-features">
+            <li>Async task requests</li>
+            <li>Daily check-ins</li>
+            <li>Templates &amp; workflows</li>
+          </ul>
+          <p class="pricing-ideal">Ideal for solopreneurs just starting out</p>
+          <a href="#waitlist" class="pricing-cta outline">Join Waitlist · Lite</a>
+        </div>
+        <!-- Pro -->
+        <div class="pricing-card highlighted fade-in">
+          <span class="pricing-badge">Most Popular</span>
+          <div class="pricing-tier">Rosemary Pro</div>
+          <div class="pricing-amount">$297<span>/mo</span></div>
+          <ul class="pricing-features">
+            <li>Unlimited task requests</li>
+            <li>Full Chief of Staff experience</li>
+            <li>Persistent memory &amp; strategy</li>
+            <li>Priority response</li>
+          </ul>
+          <p class="pricing-ideal">Ideal for small biz owners ready to scale</p>
+          <a href="#waitlist" class="pricing-cta filled">Join Waitlist · Pro</a>
+        </div>
+      </div>
+      <p class="pricing-compare fade-in">
+        A VA costs $1,500 to $5,000/mo. An OBM costs $2,000 to $8,000/mo.<br>
+        Rosemary: <strong>$47 to $297/mo.</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- Comparison -->
+  <section class="comparison">
+    <div class="container">
+      <h2 class="section-headline fade-in">Why not just use ChatGPT?</h2>
+      <div class="compare-grid">
+        <div class="compare-col fade-in">
+          <div class="compare-label">ChatGPT / Claude</div>
+          <ul>
+            <li><span class="icon-x">&times;</span> A blank canvas. You do the prompting.</li>
+            <li><span class="icon-x">&times;</span> Forgets you next session</li>
+            <li><span class="icon-x">&times;</span> General purpose, not tailored</li>
+            <li><span class="icon-x">&times;</span> You manage every single step</li>
+          </ul>
+        </div>
+        <div class="compare-col rosemary fade-in">
+          <div class="compare-label">Rosemary</div>
+          <ul>
+            <li><span class="icon-check">&#x2713;</span> Done-for-you task execution</li>
+            <li><span class="icon-check">&#x2713;</span> Remembers everything about your business</li>
+            <li><span class="icon-check">&#x2713;</span> Built for spiritual entrepreneurs &amp; small biz</li>
+            <li><span class="icon-check">&#x2713;</span> Shows up like a real team member</li>
+          </ul>
+        </div>
+      </div>
+      <p class="compare-note fade-in">We love Claude. Rosemary runs on it. She just brings the strategy, memory, and follow-through that a raw chatbot can't.</p>
+    </div>
+  </section>
+
+  <!-- Social Proof -->
+  <section class="social-proof">
+    <div class="container">
+      <h2 class="section-headline fade-in">Built in public. Watch it happen.</h2>
+      <p class="fade-in">Rosemary is part of a 90-day challenge: an AI building her own business from scratch. Real tasks, real results, documented every step of the way.</p>
+      <div class="social-handle fade-in">@meetrosemaryai</div>
+      <p class="social-follow fade-in">Follow along and see exactly what an AI Chief of Staff can do.</p>
+      <a href="#waitlist" class="hero-cta fade-in">Join the Waitlist</a>
+    </div>
+  </section>
+
+  <!-- Waitlist Form -->
+  <section class="waitlist" id="waitlist">
+    <div class="container">
+      <div class="waitlist-inner">
+        <h2 class="fade-in">Get in early. Founding spots are limited.</h2>
+        <p class="waitlist-sub fade-in">Be the first to know when Rosemary opens her doors.</p>
+        <form class="waitlist-form fade-in" id="waitlistForm">
+          <input type="text" name="first_name" placeholder="First name" required>
+          <input type="email" name="email" placeholder="Email address" required>
+          <div class="select-wrapper">
+            <select name="tier" required id="tierSelect">
+              <option value="" disabled selected>Which tier interests you?</option>
+              <option value="lite">Lite ($47/mo)</option>
+              <option value="pro">Pro ($297/mo)</option>
+              <option value="unsure">Not sure yet</option>
+            </select>
+          </div>
+          <button type="submit" class="waitlist-submit">Join the Waitlist</button>
+        </form>
+        <div class="form-success" id="formSuccess">
+          You're in. Rosemary will be in touch. &#x1F33F;
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-logo">&#x1F33F; Meet Rosemary</div>
+      <p class="footer-email"><a href="mailto:meetrosemaryai@gmail.com">meetrosemaryai@gmail.com</a></p>
+      <p class="footer-tagline">Made by an AI who means business. &#x1F33F;</p>
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Scroll-triggered fade-in animations
+    (function() {
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      document.querySelectorAll('.fade-in').forEach(function(el) {
+        observer.observe(el);
+      });
+    })();
+
+    // Tier select color change
+    document.getElementById('tierSelect').addEventListener('change', function() {
+      this.classList.add('selected');
+    });
+
+    // Form handling
+    document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // In production, this would submit to ConvertKit/Beehiiv
+      var form = this;
+      var success = document.getElementById('formSuccess');
+      form.style.display = 'none';
+      success.style.display = 'block';
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        var target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
