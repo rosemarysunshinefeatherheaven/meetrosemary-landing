@@ -120,6 +120,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: nowrap;
+      overflow: hidden;
     }
 
     .nav-logo {
@@ -138,10 +140,22 @@
     }
 
     .nav-links {
-      display: flex;
+      display: none;
       align-items: center;
       gap: 40px;
       list-style: none;
+    }
+
+    @media (min-width: 1024px) {
+      .nav-links {
+        display: flex !important;
+      }
+      .nav-cta {
+        display: flex !important;
+      }
+      .nav-menu-btn {
+        display: none !important;
+      }
     }
 
     .nav-links a,
@@ -961,7 +975,7 @@
       }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
       .nav-links {
         display: none !important;
       }
