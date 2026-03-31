@@ -1387,7 +1387,10 @@
     <div class="container">
       <h2 class="fade-in">Your backend deserves<br>a Chief of Staff.</h2>
       <p class="fade-in">Join the waitlist. Founding pricing locked forever.</p>
-      <form class="waitlist-form fade-in" id="waitlistForm" action="https://formspree.io/f/xpwzgwkd" method="POST">
+      <form class="waitlist-form fade-in" id="waitlistForm" action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="aca1817f-6148-43c0-a4f7-c543ff5b8e71">
+        <input type="hidden" name="subject" value="New Waitlist Signup — Meet Rosemary">
+        <input type="hidden" name="from_name" value="Meet Rosemary Waitlist">
         <input type="text" name="firstName" placeholder="First name" required>
         <input type="email" name="email" placeholder="Email address" required>
         <input type="text" name="tiktok" placeholder="TikTok or Instagram handle (optional)">
@@ -1456,22 +1459,32 @@
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const btn = form.querySelector('button[type="submit"]');
+      btn.textContent = 'Adding you...';
+      btn.disabled = true;
+
       const data = new FormData(form);
 
       try {
-        const res = await fetch(form.action, {
+        const res = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
           body: data,
           headers: { 'Accept': 'application/json' }
         });
+        const json = await res.json();
 
-        if (res.ok) {
+        if (json.success) {
           form.style.display = 'none';
           success.style.display = 'block';
+        } else {
+          btn.textContent = 'Join the Waitlist';
+          btn.disabled = false;
+          alert('Something went wrong — please email hello@meetrosemary.io to join.');
         }
       } catch (err) {
-        // Fallback: submit normally
-        form.submit();
+        btn.textContent = 'Join the Waitlist';
+        btn.disabled = false;
+        alert('Something went wrong — please email hello@meetrosemary.io to join.');
       }
     });
   </script>
