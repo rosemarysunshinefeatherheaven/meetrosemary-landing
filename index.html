@@ -146,18 +146,22 @@
 
     .nav-links a,
     .nav-links a:link,
-    .nav-links a:visited {
+    .nav-links a:visited,
+    .nav-links li a,
+    .nav-links li a:link,
+    .nav-links li a:visited {
       font-size: 12px;
       font-weight: 500;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: #6B7280 !important;
+      color: #9CA3AF !important;
       text-decoration: none !important;
       transition: color 0.2s;
     }
 
-    .nav-links a:hover {
-      color: var(--sage) !important;
+    .nav-links a:hover,
+    .nav-links li a:hover {
+      color: #7C9A7E !important;
     }
 
     .btn {
@@ -957,17 +961,17 @@
       }
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
       .nav-links {
-        display: none;
+        display: none !important;
       }
 
       .nav-cta {
-        display: none;
+        display: none !important;
       }
 
       .nav-menu-btn {
-        display: block;
+        display: block !important;
       }
 
       .nav-mobile {
