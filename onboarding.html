@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Rosemary — Let's Set Up Your Business Brain</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f8f7f4;
+            color: #2d2d2d;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .logo h1 {
+            font-size: 28px;
+            color: #4a7c59;
+            font-weight: 600;
+        }
+        .logo p {
+            color: #6b6b6b;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+        .intro {
+            background: #fff;
+            border: 1px solid #e8e5df;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+        .intro p {
+            font-size: 15px;
+            color: #4a4a4a;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #4a7c59;
+            margin: 32px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e8e5df;
+        }
+        .field {
+            margin-bottom: 24px;
+        }
+        label {
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: #2d2d2d;
+        }
+        label .hint {
+            font-weight: 400;
+            color: #8a8a8a;
+            font-size: 13px;
+            display: block;
+            margin-top: 2px;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="url"],
+        textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d4d0c8;
+            border-radius: 8px;
+            font-size: 15px;
+            font-family: inherit;
+            background: #fff;
+            transition: border-color 0.2s;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #4a7c59;
+            box-shadow: 0 0 0 3px rgba(74, 124, 89, 0.1);
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 400;
+            font-size: 14px;
+            background: #fff;
+            border: 1px solid #d4d0c8;
+            padding: 8px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .checkbox-group label:hover {
+            border-color: #4a7c59;
+        }
+        .checkbox-group input:checked + span {
+            color: #4a7c59;
+            font-weight: 500;
+        }
+        .checkbox-group input {
+            display: none;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: #4a7c59;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 40px;
+            transition: background 0.2s;
+        }
+        .submit-btn:hover {
+            background: #3d6a4b;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 13px;
+            color: #8a8a8a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>🌿 Meet Rosemary</h1>
+            <p>Your AI Chief of Staff</p>
+        </div>
+
+        <div class="intro">
+            <p>Welcome! This takes about 5 minutes. Your answers become Rosemary's "Business Brain" — she'll use this to understand your business, match your voice, and start helping immediately. The more specific you are, the better she'll be from Day 1.</p>
+        </div>
+
+        <!-- Using Formspree for form handling (same as current landing page) -->
+        <form action="https://formspree.io/f/xwpkkpvj" method="POST" id="onboarding-form">
+            <input type="hidden" name="_subject" value="🌿 New Rosemary Onboarding Submission">
+            <input type="hidden" name="_next" value="https://meetrosemary.io/welcome-confirmed.html">
+
+            <h2 class="section-title">Your Business</h2>
+
+            <div class="field">
+                <label>What's your first name?</label>
+                <input type="text" name="owner_name" required placeholder="e.g., Sarah">
+            </div>
+
+            <div class="field">
+                <label>What's your business name?</label>
+                <input type="text" name="business_name" required placeholder="e.g., Soul Aligned Coaching">
+            </div>
+
+            <div class="field">
+                <label>
+                    In one sentence, what does your business do?
+                    <span class="hint">Be specific about who you serve and what you offer</span>
+                </label>
+                <input type="text" name="business_description" required placeholder="e.g., I help women in their 30s build online coaching businesses through manifestation and strategy">
+            </div>
+
+            <div class="field">
+                <label>
+                    Who is your ideal customer?
+                    <span class="hint">Age, situation, what they struggle with</span>
+                </label>
+                <textarea name="target_audience" required placeholder="e.g., Women 28-45, spiritual but practical, making $3-8K/month from their coaching business, drowning in admin and content creation, want to scale to $20K+ but can't hire a team yet"></textarea>
+            </div>
+
+            <div class="field">
+                <label>What's your main offer right now?</label>
+                <input type="text" name="main_offer" required placeholder="e.g., 1:1 coaching package, 12 weeks, $3,500">
+            </div>
+
+            <div class="field">
+                <label>What do you charge for it?</label>
+                <input type="text" name="price_point" placeholder="e.g., $3,500 for 12 weeks">
+            </div>
+
+            <h2 class="section-title">Your Voice</h2>
+
+            <div class="field">
+                <label>
+                    How would you describe your brand's personality in 3 words?
+                    <span class="hint">These will guide everything Rosemary writes for you</span>
+                </label>
+                <input type="text" name="brand_tone" required placeholder="e.g., warm + bold + spiritual">
+            </div>
+
+            <div class="field">
+                <label>What words or phrases do you use a lot?</label>
+                <textarea name="brand_vocabulary" placeholder="e.g., 'aligned action', 'abundance', 'soul-led', 'let's go', 'babe'"></textarea>
+            </div>
+
+            <div class="field">
+                <label>What words or phrases would you NEVER use?</label>
+                <textarea name="brand_avoid" placeholder="e.g., 'hustle', 'grind', 'boss babe', anything corporate or salesy"></textarea>
+            </div>
+
+            <div class="field">
+                <label>
+                    Paste a caption, email, or post you've written that sounds most like you
+                    <span class="hint">This is how Rosemary learns your actual voice</span>
+                </label>
+                <textarea name="voice_example" style="min-height: 150px;" placeholder="Paste your best example here..."></textarea>
+            </div>
+
+            <h2 class="section-title">Your Platforms</h2>
+
+            <div class="field">
+                <label>Where are you most active?</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="platforms" value="Instagram"><span>Instagram</span></label>
+                    <label><input type="checkbox" name="platforms" value="TikTok"><span>TikTok</span></label>
+                    <label><input type="checkbox" name="platforms" value="YouTube"><span>YouTube</span></label>
+                    <label><input type="checkbox" name="platforms" value="Email"><span>Email/Newsletter</span></label>
+                    <label><input type="checkbox" name="platforms" value="LinkedIn"><span>LinkedIn</span></label>
+                    <label><input type="checkbox" name="platforms" value="Facebook"><span>Facebook</span></label>
+                    <label><input type="checkbox" name="platforms" value="Podcast"><span>Podcast</span></label>
+                    <label><input type="checkbox" name="platforms" value="Other"><span>Other</span></label>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Links to your profiles</label>
+                <textarea name="social_links" placeholder="Instagram: @yourhandle&#10;TikTok: @yourhandle&#10;Website: yoursite.com"></textarea>
+            </div>
+
+            <h2 class="section-title">Your Goals</h2>
+
+            <div class="field">
+                <label>What are your top 3 business goals this month?</label>
+                <textarea name="goals" required placeholder="1. Launch my new coaching package&#10;2. Post 5x/week on Instagram&#10;3. Get 10 new email subscribers"></textarea>
+            </div>
+
+            <div class="field">
+                <label>What tasks eat up most of your time right now?</label>
+                <textarea name="time_drains" placeholder="e.g., Writing social media content, responding to DMs, creating email sequences, client onboarding docs"></textarea>
+            </div>
+
+            <div class="field">
+                <label>
+                    What would be the single most helpful thing Rosemary could do for you this week?
+                    <span class="hint">Be specific — this becomes her first task</span>
+                </label>
+                <textarea name="first_task" required placeholder="e.g., Write me 7 Instagram captions for my new coaching program launch"></textarea>
+            </div>
+
+            <div class="field">
+                <label>Your email (so Rosemary can reach you)</label>
+                <input type="email" name="email" required placeholder="your@email.com">
+            </div>
+
+            <button type="submit" class="submit-btn">Build My Business Brain 🌿</button>
+        </form>
+
+        <p class="footer">Your data is private and only used by your personal Rosemary instance.<br>We never share or sell your information.</p>
+    </div>
+</body>
+</html>
